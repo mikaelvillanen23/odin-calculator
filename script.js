@@ -14,20 +14,21 @@ function multiply(a, b) {
 function divide(a, b) {
   return a / b;
 }
-function squared(num) {
-  return num * num;
-}
-function squareRoot(num) {
-  // return...
-}
-function cubed(num) {
-  return num * num * num;
-}
-function toPow(num, n) {
-  return num ** n;
-}
 function operate(operator, a, b) {
-  // jotain if operator === "+"...
+  switch (operator) {
+    case "+":
+      add(a, b);
+      break;
+    case "-":
+      subtract(a, b);
+      break;
+    case "x":
+      multiply(a, b);
+      break;
+    case "/":
+      divide(a, b);
+      break;
+  }
 }
 function updateFirstNum(input) {
   firstNum = input;
