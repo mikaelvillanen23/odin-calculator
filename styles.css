@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  font-family: Roboto, sans-serif;
+}
+
+.base {
+  background-color: black;
+  border-radius: 8px;
+  box-shadow: 12px 12px 10px;
+  height: 460px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h2 {
+  color: yellow;
+  padding-left: 10px;
+}
+.display {
+  background-color: aqua;
+  font-size: 20px;
+  height: 60px;
+  margin: 0 10px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.row {
+  margin: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.button {
+  background-color: rgb(255, 6, 255);
+  height: 50px;
+  width: 60px;
+  border-radius: 4px;
+  font-size: 18px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#clear,
+#del {
+  background-color: yellow;
+}
+
+#equals {
+  flex-grow: 4;
+  background-color: rgb(0, 252, 0);
+}
+
+#divide,
+#multiply,
+#subtract,
+#add {
+  background-color: orange;
+}
+
+#signToggle,
+#point {
+  opacity: 0.85;
+}
+
+#point {
+  font-size: 30px;
+  padding-bottom: 15px;
+}
