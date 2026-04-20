@@ -8,9 +8,10 @@ body {
 }
 
 .base {
+  margin-top: 40px;
   background-color: black;
   border-right: 10px solid rgb(48, 48, 48);
-  /* border-bottom: 2px solid green; */
+  border-bottom: 2px solid rgb(48, 48, 48);
   border-radius: 8px;
   box-shadow: 12px 12px 10px;
   height: 460px;
@@ -51,8 +52,8 @@ h2 {
   background-color: rgb(255, 6, 255);
   height: 50px;
   width: 60px;
-  /* box-shadow: 3px 0 rgb(180, 180, 180); */
   border-right: 3px solid rgb(180, 180, 180);
+  border-bottom: 1px solid rgb(180, 180, 180);
   border-radius: 4px;
   font-size: 18px;
   flex-grow: 1;
@@ -60,7 +61,7 @@ h2 {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  user-select: none; /*to prevent text highlighting*/
+  user-select: none; /*to prevent unintentional text highlighting*/
 }
 
 #clear,
@@ -78,7 +79,6 @@ h2 {
 #subtract,
 #add {
   background-color: orange;
-
 }
 
 #signToggle,
@@ -93,7 +93,8 @@ h2 {
 
 .pressed {
   padding-top: 1px;
-  opacity: 0.90;
-  box-shadow: 2px 0 rgb(180, 180, 180) inset;
+  opacity: 0.9;
+  box-shadow: 2px 0 rgb(0, 0, 0) inset;
   border-right: none;
+  border-bottom: none;
 }
