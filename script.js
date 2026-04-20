@@ -1,43 +1,72 @@
-let firstNum;
-let operator;
-let secondNum;
+let firstNum = "";
+let operator = "";
+let secondNum = "";
 
-function add(a, b) {
-  return a + b;
-}
-function subtract(a, b) {
-  return a - b;
+const display = document.querySelector(".display");
+
+
+function divide(a, b) {
+  return a / b;
 }
 function multiply(a, b) {
   return a * b;
 }
-function divide(a, b) {
-  return a / b;
+function subtract(a, b) {
+  return a - b;
+}
+function add(a, b) {
+  return a + b;
 }
 function operate(operator, a, b) {
   switch (operator) {
-    case "+":
-      add(a, b);
+    case "÷":
+      divide(a, b);
       break;
-    case "-":
-      subtract(a, b);
-      break;
-    case "x":
+    case "×":
       multiply(a, b);
       break;
-    case "/":
-      divide(a, b);
+    case "−":
+      subtract(a, b);
+      break;
+    case "+":
+      add(a, b);
       break;
   }
 }
 function updateFirstNum(input) {
-  firstNum = input;
+  if (firstNum) {
+    firstNum += input;
+  } else {
+    firstNum = input;
+  }
 }
 function updateOperator(input) {
-  operator = input;
+  if (secondNum) return;
+
+  switch (input) {
+    case "÷":
+      operator = "÷";
+      break;
+    case "×":
+      operator = "×";
+      break;
+    case "−":
+      operator = "−";
+      break;
+    case "+":
+      operator = "+";
+      break;
+  }
 }
-function updateSecondtNum(input) {
-  secondNum = input;
+function updateSecondNum(input) {
+  if (secondNum) {
+    secondNum += input;
+  } else {
+    secondNum = input;
+  }
+}
+function updateDisplay() {
+  display.textContent = `${firstNum} ${operator} ${secondNum}`;
 }
 
 // button click effect
@@ -47,7 +76,6 @@ const buttons = document.querySelectorAll(".button");
 function togglePressed(elem) {
   if (clickHeld) elem.classList.toggle("pressed");
 }
-
 buttons.forEach((button) => {
   button.addEventListener("pointerleave", () => {
     togglePressed(button);
@@ -62,5 +90,34 @@ buttons.forEach((button) => {
     clickHeld = false;
   });
 });
-
 window.addEventListener("dragstart", (event) => {event.preventDefault()});
+
+//button press to display functionality
+
+const numberButtons = document.querySelectorAll(".numberButton");
+numberButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!operator) {
+      updateFirstNum(button.textContent);
+    } else {
+      updateSecondNum(button.textContent);
+    }
+    updateDisplay();
+  });
+});
+
+const operators = document.querySelectorAll(".operator");
+operators.forEach((button) => {
+  button.addEventListener("click", () => {
+    updateOperator(button.textContent);
+    console.log(button.textContent);
+    updateDisplay();
+  });
+});
+
+// const deleteButton = document.querySelector("#del");
+// deleteButton.addEventListener("click", () => {
+//   display.textContent = display.textContent.slice(0, -1);
+// });
+
+//fix: if num starts with 0
