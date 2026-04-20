@@ -9,6 +9,8 @@ body {
 
 .base {
   background-color: black;
+  border-right: 10px solid rgb(48, 48, 48);
+  /* border-bottom: 2px solid green; */
   border-radius: 8px;
   box-shadow: 12px 12px 10px;
   height: 460px;
@@ -23,14 +25,19 @@ h2 {
   padding-left: 10px;
 }
 .display {
-  background-color: aqua;
+  background-color: rgb(146, 255, 255);
   font-size: 20px;
   height: 60px;
   margin: 0 10px;
-  padding-right: 10px;
+  padding-right: 8px;
+  border-radius: 2px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.buttonContainer {
+  font-weight: 600;
 }
 
 .row {
@@ -44,6 +51,8 @@ h2 {
   background-color: rgb(255, 6, 255);
   height: 50px;
   width: 60px;
+  /* box-shadow: 3px 0 rgb(180, 180, 180); */
+  border-right: 3px solid rgb(180, 180, 180);
   border-radius: 4px;
   font-size: 18px;
   flex-grow: 1;
@@ -51,6 +60,7 @@ h2 {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  user-select: none; /*to prevent text highlighting*/
 }
 
 #clear,
@@ -68,14 +78,22 @@ h2 {
 #subtract,
 #add {
   background-color: orange;
+
 }
 
 #signToggle,
 #point {
-  opacity: 0.85;
+  background-color: rgb(255, 0, 195);
 }
 
 #point {
   font-size: 30px;
   padding-bottom: 15px;
+}
+
+.pressed {
+  padding-top: 1px;
+  opacity: 0.90;
+  box-shadow: 2px 0 rgb(180, 180, 180) inset;
+  border-right: none;
 }

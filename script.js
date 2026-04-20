@@ -39,3 +39,28 @@ function updateOperator(input) {
 function updateSecondtNum(input) {
   secondNum = input;
 }
+
+// button click effect
+
+let clickHeld = false;
+const buttons = document.querySelectorAll(".button");
+function togglePressed(elem) {
+  if (clickHeld) elem.classList.toggle("pressed");
+}
+
+buttons.forEach((button) => {
+  button.addEventListener("pointerleave", () => {
+    togglePressed(button);
+    clickHeld = false;
+  });
+  button.addEventListener("pointerdown", () => {
+    clickHeld = true;
+    togglePressed(button);
+  });
+  button.addEventListener("pointerup", () => {
+    togglePressed(button);
+    clickHeld = false;
+  });
+});
+
+window.addEventListener("dragstart", (event) => {event.preventDefault()});
