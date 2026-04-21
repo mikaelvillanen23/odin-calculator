@@ -34,7 +34,7 @@ function operate(operator, a, b) {
   }
 }
 function updateFirstNum(input) {
-  if (firstNum) {
+  if (firstNum && firstNum !== "0") {
     firstNum += input;
   } else {
     firstNum = input;
@@ -59,7 +59,7 @@ function updateOperator(input) {
   }
 }
 function updateSecondNum(input) {
-  if (secondNum) {
+  if (secondNum && secondNum !== "0") {
     secondNum += input;
   } else {
     secondNum = input;
@@ -110,14 +110,24 @@ const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
   button.addEventListener("click", () => {
     updateOperator(button.textContent);
-    console.log(button.textContent);
     updateDisplay();
   });
 });
 
-// const deleteButton = document.querySelector("#del");
-// deleteButton.addEventListener("click", () => {
-//   display.textContent = display.textContent.slice(0, -1);
-// });
+function deleteLastChar() {
+  if (secondNum) {
+    secondNum = secondNum.slice(0, -1);
+  } else if (operator) {
+    operator = "";
+  } else {
+    if (firstNum.length > 1) {
+      firstNum = firstNum.slice(0, -1);
+    } else {
+      firstNum = "0";
+    }
+  }
+  updateDisplay()
+}
 
-//fix: if num starts with 0
+const deleteButton = document.querySelector("#del");
+deleteButton.addEventListener("click", deleteLastChar);
