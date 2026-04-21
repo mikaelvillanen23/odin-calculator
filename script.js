@@ -68,6 +68,26 @@ function updateSecondNum(input) {
 function updateDisplay() {
   display.textContent = `${firstNum} ${operator} ${secondNum}`;
 }
+function clearDisplay() {
+  firstNum = "0";
+  operator = "";
+  secondNum = "";
+  updateDisplay()
+}
+function deleteLastChar() {
+  if (secondNum) {
+    secondNum = secondNum.slice(0, -1);
+  } else if (operator) {
+    operator = "";
+  } else {
+    if (firstNum.length > 1) {
+      firstNum = firstNum.slice(0, -1);
+    } else {
+      firstNum = "0";
+    }
+  }
+  updateDisplay()
+}
 
 // button click effect
 
@@ -114,20 +134,8 @@ operators.forEach((button) => {
   });
 });
 
-function deleteLastChar() {
-  if (secondNum) {
-    secondNum = secondNum.slice(0, -1);
-  } else if (operator) {
-    operator = "";
-  } else {
-    if (firstNum.length > 1) {
-      firstNum = firstNum.slice(0, -1);
-    } else {
-      firstNum = "0";
-    }
-  }
-  updateDisplay()
-}
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", clearDisplay)
 
 const deleteButton = document.querySelector("#del");
 deleteButton.addEventListener("click", deleteLastChar);
