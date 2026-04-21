@@ -1,9 +1,8 @@
-let firstNum = "";
+let firstNum = "0";
 let operator = "";
 let secondNum = "";
 
 const display = document.querySelector(".display");
-
 
 function divide(a, b) {
   return a / b;
@@ -88,8 +87,25 @@ function deleteLastChar() {
   }
   updateDisplay()
 }
+function addDecimalPoint() {
+  if (secondNum) {
+    if (secondNum.includes(".")) {
+      return;
+    } else {
+      secondNum += ".";
+    }
+  } else if (firstNum.includes(".")) {
+     return;
+  } else {
+    firstNum += ".";
+  }
+  updateDisplay();
+}
+function evaluateDisplayContent() {
+  //
+}
 
-// button click effect
+// button click visual effect
 
 let clickHeld = false;
 const buttons = document.querySelectorAll(".button");
@@ -112,7 +128,7 @@ buttons.forEach((button) => {
 });
 window.addEventListener("dragstart", (event) => {event.preventDefault()});
 
-//button press to display functionality
+//button functionalities
 
 const numberButtons = document.querySelectorAll(".numberButton");
 numberButtons.forEach((button) => {
@@ -139,3 +155,16 @@ clearButton.addEventListener("click", clearDisplay)
 
 const deleteButton = document.querySelector("#del");
 deleteButton.addEventListener("click", deleteLastChar);
+
+const decimalButton = document.querySelector("#point");
+decimalButton.addEventListener("click", addDecimalPoint);
+
+/*
+TODO
+- sign toggle?
+- equals evaluation
+- evaluation when choosing operator after secondNum
+- divide by zero
+- round very long floats
+- fix overflow
+*/
