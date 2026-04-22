@@ -1,5 +1,5 @@
 let firstNum = "0";
-let operator = "";
+let currentOperator = "";
 let secondNum = "";
 
 const display = document.querySelector(".display");
@@ -19,16 +19,16 @@ function add(a, b) {
 function operate(operator, a, b) {
   switch (operator) {
     case "÷":
-      divide(a, b);
+      return divide(a, b);
       break;
     case "×":
-      multiply(a, b);
+      return multiply(a, b);
       break;
     case "−":
-      subtract(a, b);
+      return subtract(a, b);
       break;
     case "+":
-      add(a, b);
+      return add(a, b);
       break;
   }
 }
@@ -44,16 +44,16 @@ function updateOperator(input) {
 
   switch (input) {
     case "÷":
-      operator = "÷";
+      currentOperator = "÷";
       break;
     case "×":
-      operator = "×";
+      currentOperator = "×";
       break;
     case "−":
-      operator = "−";
+      currentOperator = "−";
       break;
     case "+":
-      operator = "+";
+      currentOperator = "+";
       break;
   }
 }
@@ -65,19 +65,22 @@ function updateSecondNum(input) {
   }
 }
 function updateDisplay() {
-  display.textContent = `${firstNum} ${operator} ${secondNum}`;
+  display.textContent = `${firstNum} ${currentOperator} ${secondNum}`;
+}
+function initializeValues() {
+  firstNum = "0";
+  currentOperator = "";
+  secondNum = "";
 }
 function clearDisplay() {
-  firstNum = "0";
-  operator = "";
-  secondNum = "";
-  updateDisplay()
+  initializeValues();
+  updateDisplay();
 }
 function deleteLastChar() {
   if (secondNum) {
     secondNum = secondNum.slice(0, -1);
-  } else if (operator) {
-    operator = "";
+  } else if (currentOperator) {
+    currentOperator = "";
   } else {
     if (firstNum.length > 1) {
       firstNum = firstNum.slice(0, -1);
@@ -102,38 +105,24 @@ function addDecimalPoint() {
   updateDisplay();
 }
 function evaluateDisplayContent() {
-  //
+  if (!secondNum) return;
+
+  const a = Number(firstNum);
+  const b = Number(secondNum);
+  const operator = currentOperator;
+
+  initializeValues();
+  firstNum = (operate(operator, a, b)).toString();
+  updateDisplay();
 }
 
-// button click visual effect
-
-let clickHeld = false;
-const buttons = document.querySelectorAll(".button");
-function togglePressed(elem) {
-  if (clickHeld) elem.classList.toggle("pressed");
-}
-buttons.forEach((button) => {
-  button.addEventListener("pointerleave", () => {
-    togglePressed(button);
-    clickHeld = false;
-  });
-  button.addEventListener("pointerdown", () => {
-    clickHeld = true;
-    togglePressed(button);
-  });
-  button.addEventListener("pointerup", () => {
-    togglePressed(button);
-    clickHeld = false;
-  });
-});
-window.addEventListener("dragstart", (event) => {event.preventDefault()});
 
 //button functionalities
 
 const numberButtons = document.querySelectorAll(".numberButton");
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (!operator) {
+    if (!currentOperator) {
       updateFirstNum(button.textContent);
     } else {
       updateSecondNum(button.textContent);
@@ -159,12 +148,39 @@ deleteButton.addEventListener("click", deleteLastChar);
 const decimalButton = document.querySelector("#point");
 decimalButton.addEventListener("click", addDecimalPoint);
 
+const equalsButton = document.querySelector("#equals");
+equalsButton.addEventListener("click", evaluateDisplayContent);
+
+
+// button click visual effect
+
+let clickHeld = false;
+const buttons = document.querySelectorAll(".button");
+function togglePressed(elem) {
+  if (clickHeld) elem.classList.toggle("pressed");
+}
+buttons.forEach((button) => {
+  button.addEventListener("pointerleave", () => {
+    togglePressed(button);
+    clickHeld = false;
+  });
+  button.addEventListener("pointerdown", () => {
+    clickHeld = true;
+    togglePressed(button);
+  });
+  button.addEventListener("pointerup", () => {
+    togglePressed(button);
+    clickHeld = false;
+  });
+});
+window.addEventListener("dragstart", (event) => {event.preventDefault()});
+
+
 /*
 TODO
-- sign toggle?
-- equals evaluation
+- sign toggle? -> first char can also be "-" ! (fix this)
+- dividing by zero
 - evaluation when choosing operator after secondNum
-- divide by zero
-- round very long floats
 - fix overflow
+- round very long floats?
 */
