@@ -102,6 +102,20 @@ function addDecimalPoint() {
   }
   updateDisplay();
 }
+function toggleSign() {
+  if (secondNum) {
+    if (secondNum.includes("-")) {
+      secondNum = secondNum.slice(1);
+    } else {
+      secondNum = "-" + secondNum;
+    }
+  } else if (firstNum.includes("-")) {
+     firstNum = firstNum.slice(1);
+  } else {
+    firstNum = "-" + firstNum;
+  }
+  updateDisplay();
+}
 function evaluateDisplayContent() {
   if (!secondNum) return;
 
@@ -111,8 +125,8 @@ function evaluateDisplayContent() {
 
   initializeValues();
 
-  if (!b) {
-    display.textContent = "Nope, can't divide by zero.";
+  if (isNaN(a) || !b) {
+    display.textContent = "Error :)";
   } else {
     firstNum = (operate(operator, a, b)).toString();
     updateDisplay();
@@ -138,7 +152,7 @@ const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
   button.addEventListener("pointerdown", () => {
     if (secondNum) evaluateDisplayContent();
-    if (display.textContent.includes("Nope")) return;
+    if (display.textContent.includes("Error")) return;
 
     updateOperator(button.textContent);
     updateDisplay();
@@ -151,11 +165,14 @@ clearButton.addEventListener("pointerdown", clearDisplay)
 const deleteButton = document.querySelector("#del");
 deleteButton.addEventListener("pointerdown", deleteLastChar);
 
+const equalsButton = document.querySelector("#equals");
+equalsButton.addEventListener("pointerdown", evaluateDisplayContent);
+
 const decimalButton = document.querySelector("#point");
 decimalButton.addEventListener("pointerdown", addDecimalPoint);
 
-const equalsButton = document.querySelector("#equals");
-equalsButton.addEventListener("pointerdown", evaluateDisplayContent);
+const signButton = document.querySelector("#signToggle");
+signButton.addEventListener("pointerdown", toggleSign);
 
 
 // button click visual effect
@@ -184,7 +201,6 @@ window.addEventListener("dragstart", (event) => {event.preventDefault()});
 
 /*
 TODO
-- sign toggle? -> first char can also be "-" ! (fix this)
 - fix overflow
 - round very long floats?
 */

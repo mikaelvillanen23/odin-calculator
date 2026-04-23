@@ -84,6 +84,8 @@ h2 {
 #signToggle,
 #point {
   background-color: rgb(226, 0, 174);
+  letter-spacing: 2px;
+  font-size: 14px;
 }
 
 #point {
