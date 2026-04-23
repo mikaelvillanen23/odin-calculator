@@ -112,8 +112,13 @@ function evaluateDisplayContent() {
   const operator = currentOperator;
 
   initializeValues();
-  firstNum = (operate(operator, a, b)).toString();
-  updateDisplay();
+
+  if (!b) {
+    display.textContent = "Nope, can't divide by zero.";
+  } else {
+    firstNum = (operate(operator, a, b)).toString();
+    updateDisplay();
+  }
 }
 
 
@@ -121,7 +126,7 @@ function evaluateDisplayContent() {
 
 const numberButtons = document.querySelectorAll(".numberButton");
 numberButtons.forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("pointerdown", () => {
     if (!currentOperator) {
       updateFirstNum(button.textContent);
     } else {
@@ -133,23 +138,25 @@ numberButtons.forEach((button) => {
 
 const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("pointerdown", () => {
+    if (display.textContent.includes("Nope")) return;
+
     updateOperator(button.textContent);
     updateDisplay();
   });
 });
 
 const clearButton = document.querySelector("#clear");
-clearButton.addEventListener("click", clearDisplay)
+clearButton.addEventListener("pointerdown", clearDisplay)
 
 const deleteButton = document.querySelector("#del");
-deleteButton.addEventListener("click", deleteLastChar);
+deleteButton.addEventListener("pointerdown", deleteLastChar);
 
 const decimalButton = document.querySelector("#point");
-decimalButton.addEventListener("click", addDecimalPoint);
+decimalButton.addEventListener("pointerdown", addDecimalPoint);
 
 const equalsButton = document.querySelector("#equals");
-equalsButton.addEventListener("click", evaluateDisplayContent);
+equalsButton.addEventListener("pointerdown", evaluateDisplayContent);
 
 
 // button click visual effect
@@ -179,7 +186,6 @@ window.addEventListener("dragstart", (event) => {event.preventDefault()});
 /*
 TODO
 - sign toggle? -> first char can also be "-" ! (fix this)
-- dividing by zero
 - evaluation when choosing operator after secondNum
 - fix overflow
 - round very long floats?
