@@ -89,6 +89,8 @@ function deleteLastChar() {
   updateDisplay()
 }
 function addDecimalPoint() {
+  if (display.textContent.includes("Error")) return;
+
   if (secondNum) {
     if (secondNum.includes(".")) {
       return;
@@ -103,6 +105,8 @@ function addDecimalPoint() {
   updateDisplay();
 }
 function toggleSign() {
+  if (display.textContent.includes("Error")) return;
+
   if (secondNum) {
     if (secondNum.includes("-")) {
       secondNum = secondNum.slice(1);
@@ -201,6 +205,7 @@ window.addEventListener("dragstart", (event) => {event.preventDefault()});
 
 /*
 TODO
+- fix appending to result by starting anew after operation
 - fix overflow
 - round very long floats?
 */
