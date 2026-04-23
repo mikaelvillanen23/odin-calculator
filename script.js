@@ -40,8 +40,6 @@ function updateFirstNum(input) {
   }
 }
 function updateOperator(input) {
-  if (secondNum) return;
-
   switch (input) {
     case "÷":
       currentOperator = "÷";
@@ -139,6 +137,7 @@ numberButtons.forEach((button) => {
 const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
   button.addEventListener("pointerdown", () => {
+    if (secondNum) evaluateDisplayContent();
     if (display.textContent.includes("Nope")) return;
 
     updateOperator(button.textContent);
@@ -186,7 +185,6 @@ window.addEventListener("dragstart", (event) => {event.preventDefault()});
 /*
 TODO
 - sign toggle? -> first char can also be "-" ! (fix this)
-- evaluation when choosing operator after secondNum
 - fix overflow
 - round very long floats?
 */
