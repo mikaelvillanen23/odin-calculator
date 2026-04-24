@@ -89,7 +89,7 @@ function deleteLastChar() {
   updateDisplay()
 }
 function addDecimalPoint() {
-  if (display.textContent.includes("Error")) return;
+  if (display.textContent.includes(":)")) return;
 
   if (secondNum) {
     if (secondNum.includes(".")) {
@@ -105,7 +105,7 @@ function addDecimalPoint() {
   updateDisplay();
 }
 function toggleSign() {
-  if (display.textContent.includes("Error")) return;
+  if (display.textContent.includes(":)")) return;
 
   if (secondNum) {
     if (secondNum.includes("-")) {
@@ -128,9 +128,11 @@ function evaluateDisplayContent() {
   const operator = currentOperator;
 
   initializeValues();
-
-  if (isNaN(a) || !b) {
+  
+  if (isNaN(a) || isNaN(b)) {
     display.textContent = "Error :)";
+  } else if (operator === "÷" && (b === 0 || b === -0)) {
+    display.textContent = "Can't divide by zero :)";
   } else {
     firstNum = (operate(operator, a, b)).toString();
     updateDisplay();
@@ -156,7 +158,7 @@ const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
   button.addEventListener("pointerdown", () => {
     if (secondNum) evaluateDisplayContent();
-    if (display.textContent.includes("Error")) return;
+    if (display.textContent.includes(":)")) return;
 
     updateOperator(button.textContent);
     updateDisplay();
