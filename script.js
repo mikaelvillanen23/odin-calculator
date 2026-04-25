@@ -1,7 +1,7 @@
 let firstNum = "0";
 let currentOperator = "";
 let secondNum = "";
-
+let isResult = false;
 const display = document.querySelector(".display");
 
 function divide(a, b) {
@@ -33,7 +33,7 @@ function operate(operator, a, b) {
   }
 }
 function updateFirstNum(input) {
-  if (firstNum && firstNum !== "0") {
+  if (firstNum && firstNum !== "0" && !isResult) {
     firstNum += input;
   } else {
     firstNum = input;
@@ -80,7 +80,7 @@ function deleteLastChar() {
   } else if (currentOperator) {
     currentOperator = "";
   } else {
-    if (firstNum.length > 1) {
+    if (firstNum.length > 1 && !isResult) {
       firstNum = firstNum.slice(0, -1);
     } else {
       firstNum = "0";
@@ -89,7 +89,7 @@ function deleteLastChar() {
   updateDisplay()
 }
 function addDecimalPoint() {
-  if (display.textContent.includes(":)")) return;
+  if (display.textContent.includes(":)") || isResult) return;
 
   if (secondNum) {
     if (secondNum.includes(".")) {
@@ -105,7 +105,7 @@ function addDecimalPoint() {
   updateDisplay();
 }
 function toggleSign() {
-  if (display.textContent.includes(":)")) return;
+  if (display.textContent.includes(":)") || isResult) return;
 
   if (secondNum) {
     if (secondNum.includes("-")) {
@@ -113,7 +113,7 @@ function toggleSign() {
     } else {
       secondNum = "-" + secondNum;
     }
-  } else if (firstNum.includes("-")) {
+  } else if (firstNum.includes("-")) { // tää kusee resultin tapauksessa
      firstNum = firstNum.slice(1);
   } else {
     firstNum = "-" + firstNum;
@@ -128,13 +128,14 @@ function evaluateDisplayContent() {
   const operator = currentOperator;
 
   initializeValues();
-  
+
   if (isNaN(a) || isNaN(b)) {
     display.textContent = "Error :)";
   } else if (operator === "÷" && (b === 0 || b === -0)) {
     display.textContent = "Can't divide by zero :)";
   } else {
-    firstNum = (operate(operator, a, b)).toString();
+    firstNum = (operate(operator, a, b));
+    isResult = true;
     updateDisplay();
   }
 }
@@ -151,6 +152,7 @@ numberButtons.forEach((button) => {
       updateSecondNum(button.textContent);
     }
     updateDisplay();
+    isResult = false;
   });
 });
 
@@ -204,10 +206,9 @@ buttons.forEach((button) => {
 });
 window.addEventListener("dragstart", (event) => {event.preventDefault()});
 
-
 /*
 TODO
-- fix appending to result by starting anew after operation
 - fix overflow
+- show last operation on separate line after operation?
 - round very long floats?
 */
