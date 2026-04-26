@@ -2,7 +2,7 @@ let firstNum = "0";
 let currentOperator = "";
 let secondNum = "";
 let isResult = false;
-const display = document.querySelector(".display");
+const display = document.querySelector(".primaryDisplay");
 
 function divide(a, b) {
   return a / b;
