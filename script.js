@@ -2,7 +2,8 @@ let firstNum = "0";
 let currentOperator = "";
 let secondNum = "";
 let isResult = false;
-const display = document.querySelector(".primaryDisplay");
+const primaryDisplay = document.querySelector(".primaryDisplay");
+const secondaryDisplay = document.querySelector(".secondaryDisplay");
 
 function divide(a, b) {
   return a / b;
@@ -62,23 +63,29 @@ function updateSecondNum(input) {
     secondNum = input;
   }
 }
-function updateDisplay() {
-  display.textContent = `${firstNum} ${currentOperator} ${secondNum}`;
+function updateDisplays() {
+  if (!isResult) secondaryDisplay.textContent = "";
+
+  primaryDisplay.textContent = `${firstNum} ${currentOperator} ${secondNum}`;
 }
 function initializeValues() {
   firstNum = "0";
   currentOperator = "";
   secondNum = "";
+  isResult = false;
+  secondaryDisplay.textContent = "";
 }
-function clearDisplay() {
+function clearDisplays() {
   initializeValues();
-  updateDisplay();
+  updateDisplays();
 }
 function deleteLastChar() {
   if (secondNum) {
     secondNum = secondNum.slice(0, -1);
   } else if (currentOperator) {
-    currentOperator = "";
+    if (isResult) {
+      return;
+    } else currentOperator = "";
   } else {
     if (firstNum.length > 1 && !isResult) {
       firstNum = firstNum.slice(0, -1);
@@ -86,10 +93,11 @@ function deleteLastChar() {
       firstNum = "0";
     }
   }
-  updateDisplay()
+  isResult = false;
+  updateDisplays()
 }
 function addDecimalPoint() {
-  if (display.textContent.includes(":)") || isResult) return;
+  if (primaryDisplay.textContent.includes(":)") || isResult) return;
 
   if (secondNum) {
     if (secondNum.includes(".")) {
@@ -102,10 +110,10 @@ function addDecimalPoint() {
   } else {
     firstNum += ".";
   }
-  updateDisplay();
+  updateDisplays();
 }
 function toggleSign() {
-  if (display.textContent.includes(":)") || isResult) return;
+  if (primaryDisplay.textContent.includes(":)") || isResult) return;
 
   if (secondNum) {
     if (secondNum.includes("-")) {
@@ -113,14 +121,14 @@ function toggleSign() {
     } else {
       secondNum = "-" + secondNum;
     }
-  } else if (firstNum.includes("-")) { // tää kusee resultin tapauksessa
+  } else if (firstNum.includes("-")) {
      firstNum = firstNum.slice(1);
   } else {
     firstNum = "-" + firstNum;
   }
-  updateDisplay();
+  updateDisplays();
 }
-function evaluateDisplayContent() {
+function evaluateprimaryDisplayContent() {
   if (!secondNum) return;
 
   const a = Number(firstNum);
@@ -130,13 +138,14 @@ function evaluateDisplayContent() {
   initializeValues();
 
   if (isNaN(a) || isNaN(b)) {
-    display.textContent = "Error :)";
+    primaryDisplay.textContent = "Error :)";
   } else if (operator === "÷" && (b === 0 || b === -0)) {
-    display.textContent = "Can't divide by zero :)";
+    primaryDisplay.textContent = "Can't divide by zero :)";
   } else {
     firstNum = (operate(operator, a, b));
     isResult = true;
-    updateDisplay();
+    updateDisplays();
+    secondaryDisplay.textContent = `${a} ${operator} ${b} =`;
   }
 }
 
@@ -145,36 +154,35 @@ function evaluateDisplayContent() {
 
 const numberButtons = document.querySelectorAll(".numberButton");
 numberButtons.forEach((button) => {
-  button.addEventListener("pointerdown", () => {
+  button.addEventListener("pointerdown", () => {      
     if (!currentOperator) {
       updateFirstNum(button.textContent);
     } else {
       updateSecondNum(button.textContent);
     }
-    updateDisplay();
     isResult = false;
+    updateDisplays();
   });
 });
 
 const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
   button.addEventListener("pointerdown", () => {
-    if (secondNum) evaluateDisplayContent();
-    if (display.textContent.includes(":)")) return;
-
+    if (primaryDisplay.textContent.includes(":)")) return;
+    if (secondNum) evaluateprimaryDisplayContent();
     updateOperator(button.textContent);
-    updateDisplay();
+    updateDisplays();
   });
 });
 
 const clearButton = document.querySelector("#clear");
-clearButton.addEventListener("pointerdown", clearDisplay)
+clearButton.addEventListener("pointerdown", clearDisplays)
 
 const deleteButton = document.querySelector("#del");
 deleteButton.addEventListener("pointerdown", deleteLastChar);
 
 const equalsButton = document.querySelector("#equals");
-equalsButton.addEventListener("pointerdown", evaluateDisplayContent);
+equalsButton.addEventListener("pointerdown", evaluateprimaryDisplayContent);
 
 const decimalButton = document.querySelector("#point");
 decimalButton.addEventListener("pointerdown", addDecimalPoint);
