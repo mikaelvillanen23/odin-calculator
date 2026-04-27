@@ -168,8 +168,8 @@ numberButtons.forEach((button) => {
 const operators = document.querySelectorAll(".operator");
 operators.forEach((button) => {
   button.addEventListener("pointerdown", () => {
-    if (primaryDisplay.textContent.includes(":)")) return;
     if (secondNum) evaluateprimaryDisplayContent();
+    if (primaryDisplay.textContent.includes(":)")) return;
     updateOperator(button.textContent);
     updateDisplays();
   });
@@ -217,6 +217,4 @@ window.addEventListener("dragstart", (event) => {event.preventDefault()});
 /*
 TODO
 - fix overflow
-- show last operation on separate line after operation?
-- round very long floats?
 */
