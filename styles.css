@@ -19,7 +19,6 @@ body {
   width: 300px;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 }
 
 h2 {
@@ -32,11 +31,12 @@ h2 {
   font-size: 20px;
   height: 45px;
   margin: 0 10px 10px;
-  padding: 0 8px;
+  padding: 12px 8px;
   border-radius: 0 0 2px 2px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  text-align: right;
+  text-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .secondaryDisplay {

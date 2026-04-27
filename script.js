@@ -2,6 +2,7 @@ let firstNum = "0";
 let currentOperator = "";
 let secondNum = "";
 let isResult = false;
+
 const primaryDisplay = document.querySelector(".primaryDisplay");
 const secondaryDisplay = document.querySelector(".secondaryDisplay");
 
@@ -67,6 +68,7 @@ function updateDisplays() {
   if (!isResult) secondaryDisplay.textContent = "";
 
   primaryDisplay.textContent = `${firstNum} ${currentOperator} ${secondNum}`;
+  primaryDisplay.scrollLeft = primaryDisplay.scrollWidth; // to display last input in case of overflow
 }
 function initializeValues() {
   firstNum = "0";
@@ -94,7 +96,7 @@ function deleteLastChar() {
     }
   }
   isResult = false;
-  updateDisplays()
+  updateDisplays();
 }
 function addDecimalPoint() {
   if (primaryDisplay.textContent.includes(":)") || isResult) return;
@@ -176,7 +178,7 @@ operators.forEach((button) => {
 });
 
 const clearButton = document.querySelector("#clear");
-clearButton.addEventListener("pointerdown", clearDisplays)
+clearButton.addEventListener("pointerdown", clearDisplays);
 
 const deleteButton = document.querySelector("#del");
 deleteButton.addEventListener("pointerdown", deleteLastChar);
@@ -213,8 +215,3 @@ buttons.forEach((button) => {
   });
 });
 window.addEventListener("dragstart", (event) => {event.preventDefault()});
-
-/*
-TODO
-- fix overflow
-*/
