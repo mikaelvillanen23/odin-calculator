@@ -1,1 +1,5 @@
-# odin-calculator
+This was the final project for The Odin Projects Foundations course. It tested everything that has been learned during the course (except object basics).
+
+The project was a lot of fun and a nice challenge. In the end it was satisfying to see that many basic concepts had really been internalized, and the ability to research solutions to problems had developed nicely.
+
+It was interesting to note how as the project grew in size with each new added feature it became increasingly harder to really stay in the loop with all the conditions for different functionalities. It also became more and more challenging to fit new features in the code so that everything still functioned as intended. But I'm really happy with the end result, as everything seems to work like it should and the code didn't get unbearably messy either, though it could for sure be refactored here and there.
