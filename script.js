@@ -107,7 +107,7 @@ function addDecimalPoint() {
     } else {
       secondNum += ".";
     }
-  } else if (firstNum.includes(".")) {
+  } else if (firstNum.includes(".") || currentOperator) {
      return;
   } else {
     firstNum += ".";
